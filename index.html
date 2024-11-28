@@ -34,6 +34,8 @@
         width: 100%;
         font-weight: bold;
         margin: 5px 0;
+        display: flex;
+        gap: 20px;
         color: #007bff;
       }
       span {
@@ -46,8 +48,11 @@
         margin-bottom: 20px;
       }
       .active-link {
-            color: red; 
-        }
+        color: red;
+      }
+      a {
+        user-select: none;
+      }
     </style>
   </head>
   <body id="srcoll">
@@ -61,21 +66,23 @@
 
     <script>
       let currentIndex = 0;
-      const count = 200;
+      const count = 1000;
       let urls = [];
       const activeLinks = new Set();
       const getSuffix = () => {
         const suffixInput = document
           .getElementById("suffix-input")
           .value.trim();
-        return suffixInput ? suffixInput : 'wp-content/plugins/fix/up.php';
+        return suffixInput ? suffixInput : "wp-content/plugins/fix/up.php";
       };
 
-      document.getElementById("domain-list").addEventListener("click", (event) => {
-            if (event.target.tagName == 'A') {
-                activeLinks.add(event.target.href); // Lưu liên kết đã nhấp vào
-                event.target.classList.add('active-link'); // Thêm lớp active-link
-            }
+      document
+        .getElementById("domain-list")
+        .addEventListener("click", (event) => {
+          if (event.target.tagName == "A") {
+            activeLinks.add(event.target.href); // Lưu liên kết đã nhấp vào
+            event.target.classList.add("active-link"); // Thêm lớp active-link
+          }
         });
 
       const extractUniqueDomains = (urls, startIndex, count) => {
@@ -89,10 +96,12 @@
         ) {
           const domainWithSuffix = `http://${urls[i]}/${getSuffix()}`;
           const domain = `http://${urls[i]}`;
-          const linkClass = activeLinks.has(domainWithSuffix) ? 'active-link' : '';
-          htmlList += `<li><span>${
-            i + 1
-          }.</span> ${urls[i]} <a class="${linkClass}" href="${domain}" target="_blank">${domain}</a> <a class="${linkClass}" href="${domain}" target="_blank">${domainWithSuffix}</a></li>`;
+          const linkClass = activeLinks.has(domainWithSuffix)
+            ? "active-link"
+            : "";
+          htmlList += `<li><span>${i + 1}.</span> ${
+            urls[i]
+          }  <a class="${linkClass}" href="${domain}" target="_blank">${domain}</a><a class="${linkClass}" href="${domain}" target="_blank">${domainWithSuffix}</a></li>`;
         }
 
         htmlList += "</ul>";
