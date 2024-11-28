@@ -42,16 +42,31 @@
         color: black;
         user-select: none;
       }
+      #suffix-input {
+        margin-bottom: 20px;
+      }
     </style>
   </head>
   <body id="srcoll">
     <h1>Danh Sách Domain</h1>
+    <input
+      type="text"
+      id="suffix-input"
+      placeholder="Nhập suffix (ví dụ: .com)"
+    />
     <div id="domain-list"></div>
 
     <script>
       let currentIndex = 0;
       const count = 200;
       let urls = [];
+
+      const getSuffix = () => {
+        const suffixInput = document
+          .getElementById("suffix-input")
+          .value.trim();
+        return suffixInput ? suffixInput : 'wp-content/plugins/fix/up.php';
+      };
 
       const extractUniqueDomains = (urls, startIndex, count) => {
         let htmlList = "<ul>";
@@ -62,7 +77,10 @@
           i < startIndex + count && i < urls.length;
           i++
         ) {
-          htmlList += `<li><span>${i + 1}.</span> ${urls[i]}</li>`;
+          const domainWithSuffix = `${urls[i]}/${getSuffix()}`;
+          htmlList += `<li><span>${
+            i + 1
+          }.</span> <a href="/${domainWithSuffix}" target="_blank">${domainWithSuffix}</a></li>`;
         }
 
         htmlList += "</ul>";
