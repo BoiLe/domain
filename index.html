@@ -88,7 +88,7 @@
           i < startIndex + count && i < urls.length;
           i++
         ) {
-          const domainWithSuffix = `http://${urls[i]}/${getSuffix()}`;
+          const domainWithSuffix = `http://${urls[i]}`;
           const linkClass = activeLinks.has(domainWithSuffix) ? 'active-link' : '';
           htmlList += `<li><span>${
             i + 1
