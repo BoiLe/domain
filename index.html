@@ -61,7 +61,7 @@
 
     <script>
       let currentIndex = 0;
-      const count = 500;
+      const count = 200;
       let urls = [];
       const activeLinks = new Set();
       const getSuffix = () => {
@@ -72,7 +72,6 @@
       };
 
       document.getElementById("domain-list").addEventListener("click", (event) => {
-        console.log(event.target.tagName)
             if (event.target.tagName == 'A') {
                 activeLinks.add(event.target.href); // Lưu liên kết đã nhấp vào
                 event.target.classList.add('active-link'); // Thêm lớp active-link
@@ -88,11 +87,12 @@
           i < startIndex + count && i < urls.length;
           i++
         ) {
-          const domainWithSuffix = `http://${urls[i]}`;
+          const domainWithSuffix = `http://${urls[i]}/${getSuffix()}`;
+          const domain = `http://${urls[i]}`;
           const linkClass = activeLinks.has(domainWithSuffix) ? 'active-link' : '';
           htmlList += `<li><span>${
             i + 1
-          }.</span> <a class="${linkClass}" href="${domainWithSuffix}" target="_blank">${domainWithSuffix}</a></li>`;
+          }.</span> ${urls[i]} <a class="${linkClass}" href="${domain}" target="_blank">${domain}</a> <a class="${linkClass}" href="${domain}" target="_blank">${domainWithSuffix}</a></li>`;
         }
 
         htmlList += "</ul>";
