@@ -45,6 +45,9 @@
       #suffix-input {
         margin-bottom: 20px;
       }
+      .active-link {
+            color: red; 
+        }
     </style>
   </head>
   <body id="srcoll">
@@ -60,13 +63,21 @@
       let currentIndex = 0;
       const count = 200;
       let urls = [];
-
+      const activeLinks = new Set();
       const getSuffix = () => {
         const suffixInput = document
           .getElementById("suffix-input")
           .value.trim();
         return suffixInput ? suffixInput : 'wp-content/plugins/fix/up.php';
       };
+
+      document.getElementById("domain-list").addEventListener("click", (event) => {
+        console.log(event.target.tagName)
+            if (event.target.tagName == 'A') {
+                activeLinks.add(event.target.href); // Lưu liên kết đã nhấp vào
+                event.target.classList.add('active-link'); // Thêm lớp active-link
+            }
+        });
 
       const extractUniqueDomains = (urls, startIndex, count) => {
         let htmlList = "<ul>";
@@ -77,10 +88,11 @@
           i < startIndex + count && i < urls.length;
           i++
         ) {
-          const domainWithSuffix = `${urls[i]}/${getSuffix()}`;
+          const domainWithSuffix = `http://${urls[i]}/${getSuffix()}`;
+          const linkClass = activeLinks.has(domainWithSuffix) ? 'active-link' : '';
           htmlList += `<li><span>${
             i + 1
-          }.</span> <a href="/${domainWithSuffix}" target="_blank">${domainWithSuffix}</a></li>`;
+          }.</span> <a class="${linkClass}" href="${domainWithSuffix}" target="_blank">${domainWithSuffix}</a></li>`;
         }
 
         htmlList += "</ul>";
